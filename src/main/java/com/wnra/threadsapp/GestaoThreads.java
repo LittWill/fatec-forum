@@ -25,10 +25,8 @@ public class GestaoThreads extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath();
-	Thread thread = new Thread("Wilson", CategoriaDAO.obter("Jogos"), "Como buildar com Sylas?");
-	
-	ThreadDAO.salvar(thread);
-	System.out.println("OK!");
+		
+		System.out.println(ThreadDAO.listarThreads());
 	}
 
 }

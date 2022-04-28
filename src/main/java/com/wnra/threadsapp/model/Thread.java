@@ -12,7 +12,17 @@ public class Thread {
 	private String questao;
 	private int likes;
 	private int dislikes;
-
+	
+	public Thread(String id, String autorNome, LocalDateTime dataPostagem,
+			Categoria categoria, String questao, int likes, int dislikes) {
+		this.id = id;
+		this.autorNome = autorNome;
+		this.dataPostagem = dataPostagem;
+		this.categoria = categoria;
+		this.questao = questao;
+		this.likes = likes;
+		this.dislikes = dislikes;
+	}
 	public Thread(String autorNome, Categoria categoria,
 			String questao) {
 		this.id = UUID.randomUUID().toString();
@@ -64,5 +74,14 @@ public class Thread {
 	public void setLikes(int likes) {
 		this.likes = likes;
 	}
+	@Override
+	public String toString() {
+		return "Thread [id=" + id + ", autorNome=" + autorNome
+				+ ", dataPostagem=" + dataPostagem + ", categoria=" + categoria.getNome()
+				+ ", questao=" + questao + ", likes=" + likes + ", dislikes="
+				+ dislikes + "]";
+	}
+	
+	
 
 }
