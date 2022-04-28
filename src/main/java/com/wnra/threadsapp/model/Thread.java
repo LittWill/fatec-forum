@@ -6,18 +6,17 @@ import java.util.UUID;
 public class Thread {
 
 	private String id;
+	private String autorNome;
 	private LocalDateTime dataPostagem;
 	private Categoria categoria;
 	private String questao;
 	private int likes;
 	private int dislikes;
 
-	public Thread() {
-	}
-
-	public Thread(Categoria categoria,
+	public Thread(String autorNome, Categoria categoria,
 			String questao, int likes, int dislikes) {
 		this.id = UUID.randomUUID().toString();
+		this.autorNome = autorNome;
 		this.dataPostagem = LocalDateTime.now();
 		this.categoria = categoria;
 		this.questao = questao;
@@ -29,6 +28,19 @@ public class Thread {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getAutorNome() {
+		return autorNome;
+	}
+	public void setAutorNome(String autorNome) {
+		this.autorNome = autorNome;
+	}
+	public int getDislikes() {
+		return dislikes;
+	}
+	public void setDislikes(int dislikes) {
+		this.dislikes = dislikes;
 	}
 	public LocalDateTime getDataPostagem() {
 		return dataPostagem;
@@ -53,12 +65,6 @@ public class Thread {
 	}
 	public void setLikes(int likes) {
 		this.likes = likes;
-	}
-	public int getDislike() {
-		return dislikes;
-	}
-	public void setDislike(int dislike) {
-		this.dislikes = dislike;
 	}
 
 }

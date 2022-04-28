@@ -6,10 +6,12 @@ import java.util.UUID;
 public class Resposta {
 	
 	private String id;
+	private String autorNome;
 	private LocalDateTime dataPostagem;
 
-	public Resposta(Integer id) {
+	public Resposta(String autorNome) {
 		this.id = UUID.randomUUID().toString();
+		this.autorNome = autorNome;
 		this.dataPostagem = LocalDateTime.now();
 	}
 
@@ -19,6 +21,14 @@ public class Resposta {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getAutorNome() {
+		return autorNome;
+	}
+
+	public void setAutorNome(String autorNome) {
+		this.autorNome = autorNome;
 	}
 
 	public LocalDateTime getDataPostagem() {
