@@ -1,30 +1,33 @@
 package com.wnra.threadsapp.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Thread {
 
-	private Integer id;
+	private String id;
 	private LocalDateTime dataPostagem;
 	private Categoria categoria;
 	private String questao;
 	private int likes;
-	private int dislike;
+	private int dislikes;
+
 	public Thread() {
 	}
-	public Thread(Integer id, LocalDateTime dataPostagem, Categoria categoria,
-			String questao, int likes, int dislike) {
-		this.id = id;
-		this.dataPostagem = dataPostagem;
+
+	public Thread(Categoria categoria,
+			String questao, int likes, int dislikes) {
+		this.id = UUID.randomUUID().toString();
+		this.dataPostagem = LocalDateTime.now();
 		this.categoria = categoria;
 		this.questao = questao;
 		this.likes = likes;
-		this.dislike = dislike;
+		this.dislikes = dislikes;
 	}
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public LocalDateTime getDataPostagem() {
@@ -52,10 +55,10 @@ public class Thread {
 		this.likes = likes;
 	}
 	public int getDislike() {
-		return dislike;
+		return dislikes;
 	}
 	public void setDislike(int dislike) {
-		this.dislike = dislike;
+		this.dislikes = dislike;
 	}
 
 }

@@ -1,26 +1,23 @@
 package com.wnra.threadsapp.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Resposta {
 	
-	private Integer id;
+	private String id;
 	private LocalDateTime dataPostagem;
-	
-	
-	public Resposta() {
+
+	public Resposta(Integer id) {
+		this.id = UUID.randomUUID().toString();
+		this.dataPostagem = LocalDateTime.now();
 	}
 
-	public Resposta(Integer id, LocalDateTime dataPostagem) {
-		this.id = id;
-		this.dataPostagem = dataPostagem;
-	}
-
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
