@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wnra.threadsapp.db.DBConnection;
-import com.wnra.threadsapp.model.Categoria;
 import com.wnra.threadsapp.model.Thread;
 
 public class ThreadDAO {
@@ -100,8 +99,7 @@ public class ThreadDAO {
 
 	}
 	
-	public static void atribuirLike(String id) {
-		Thread thread = ThreadDAO.obterThread(id);
+	public static void atribuirLike(Thread thread) {
 		
 		if (null == thread) return;
 
@@ -121,8 +119,7 @@ public class ThreadDAO {
 	}
 	}
 	
-	public static void atribuirDislike(String id) {
-		Thread thread = ThreadDAO.obterThread(id);
+	public static void atribuirDislike(Thread thread) {
 		
 		if (null == thread) return;
 

@@ -26,12 +26,7 @@ public class GestaoThreads extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath();
 		
-		Thread thread = ThreadDAO.obterThread("792b638e-88db-4819-9ca7-cdf65c8db588");
-		System.out.println("Antes: " + thread.getDislikes());
-		
-		ThreadDAO.atribuirDislike(thread.getId());
-		thread = ThreadDAO.obterThread("792b638e-88db-4819-9ca7-cdf65c8db588");
-		System.out.println("Depois: " + thread.getDislikes());
+		System.out.println(CategoriaDAO.listarCategorias());
 	}
 
 }
