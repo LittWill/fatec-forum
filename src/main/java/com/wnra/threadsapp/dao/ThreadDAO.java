@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wnra.threadsapp.db.DBConnection;
+import com.wnra.threadsapp.model.Categoria;
 import com.wnra.threadsapp.model.Thread;
 
 public class ThreadDAO {
-	
+
 	public static boolean salvar(Thread thread) {
 		boolean isThreadSalva = false;
 
@@ -37,8 +38,37 @@ public class ThreadDAO {
 
 		return isThreadSalva;
 	}
-	
-	public static List <Thread> listarThreads(){
+
+	public static Thread obterThread(String id) {
+		Thread thread = null;
+		try {
+
+			Connection conexao = DBConnection.start();
+
+			PreparedStatement sql = conexao.prepareStatement(
+					"SELECT id, autor_nome, data_postagem, categoria_nome, questao, likes, dislikes FROM thread WHERE id=?");
+			sql.setString(1, id);
+			ResultSet resultado = sql.executeQuery();
+			while (resultado.next()) {
+				thread = new Thread(resultado.getString("id"),
+						resultado.getString("autor_nome"),
+						(LocalDateTime) resultado.getObject("data_postagem"),
+						CategoriaDAO
+								.obter(resultado.getString("categoria_nome")),
+						resultado.getString("questao"),
+						resultado.getInt("likes"),
+						resultado.getInt("dislikes"));
+			}
+
+			conexao.close();
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return thread;
+
+	}
+
+	public static List<Thread> listarThreads() {
 		List<Thread> threads = new ArrayList<>();
 
 		try {
@@ -49,16 +79,15 @@ public class ThreadDAO {
 					"SELECT id, autor_nome, data_postagem, categoria_nome, questao, likes, dislikes FROM thread");
 			ResultSet resultado = sql.executeQuery();
 			while (resultado.next()) {
-				Thread thread = new Thread(
-						  resultado.getString("id"),
-						  resultado.getString("autor_nome"), 
-						  (LocalDateTime) resultado.getObject("data_postagem"), 
-						  CategoriaDAO.obter(resultado.getString("categoria_nome")), 
-						  resultado.getString("questao"), 
-						  resultado.getInt("likes"), 
-						  resultado.getInt("dislikes")
-						  );
-				
+				Thread thread = new Thread(resultado.getString("id"),
+						resultado.getString("autor_nome"),
+						(LocalDateTime) resultado.getObject("data_postagem"),
+						CategoriaDAO
+								.obter(resultado.getString("categoria_nome")),
+						resultado.getString("questao"),
+						resultado.getInt("likes"),
+						resultado.getInt("dislikes"));
+
 				threads.add(thread);
 			}
 
@@ -70,6 +99,47 @@ public class ThreadDAO {
 		return threads;
 
 	}
+	
+	public static void atribuirLike(String id) {
+		Thread thread = ThreadDAO.obterThread(id);
+		
+		if (null == thread) return;
 
+		try {
+			Connection conexao = DBConnection.start();
+
+			PreparedStatement sql = conexao.prepareStatement(
+					"UPDATE thread SET likes=? WHERE id=?");
+			sql.setInt(1, thread.getLikes() + 1);
+			sql.setString(2, thread.getId());
+			sql.executeUpdate();
+			conexao.close();
+		}
+
+		catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+	}
+	}
+	
+	public static void atribuirDislike(String id) {
+		Thread thread = ThreadDAO.obterThread(id);
+		
+		if (null == thread) return;
+
+		try {
+			Connection conexao = DBConnection.start();
+
+			PreparedStatement sql = conexao.prepareStatement(
+					"UPDATE thread SET dislikes=? WHERE id=?");
+			sql.setInt(1, thread.getDislikes() + 1);
+			sql.setString(2, thread.getId());
+			sql.executeUpdate();
+			conexao.close();
+		}
+
+		catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+	}
+	}
 
 }
