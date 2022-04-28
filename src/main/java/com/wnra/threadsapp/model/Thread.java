@@ -14,14 +14,12 @@ public class Thread {
 	private int dislikes;
 
 	public Thread(String autorNome, Categoria categoria,
-			String questao, int likes, int dislikes) {
+			String questao) {
 		this.id = UUID.randomUUID().toString();
 		this.autorNome = autorNome;
 		this.dataPostagem = LocalDateTime.now();
 		this.categoria = categoria;
 		this.questao = questao;
-		this.likes = likes;
-		this.dislikes = dislikes;
 	}
 	public String getId() {
 		return id;

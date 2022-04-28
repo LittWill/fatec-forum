@@ -1,13 +1,16 @@
 package com.wnra.threadsapp;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.wnra.threadsapp.dao.CategoriaDAO;
+import com.wnra.threadsapp.dao.ThreadDAO;
+import com.wnra.threadsapp.model.Thread;
 
 @WebServlet(urlPatterns = "/threads")
 public class GestaoThreads extends HttpServlet {
@@ -22,9 +25,10 @@ public class GestaoThreads extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath();
-		
-		System.out.println(path);
-
+	Thread thread = new Thread("Wilson", CategoriaDAO.obter("Jogos"), "Como buildar com Sylas?");
+	
+	ThreadDAO.salvar(thread);
+	System.out.println("OK!");
 	}
 
 }
