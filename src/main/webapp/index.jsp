@@ -53,6 +53,10 @@
 
             <body>
 
+                  <div class="area-identificacao">
+                        <label for="">Insira seu nome para criar uma pergunta</label>
+                  </div>
+
                   <main>
 
                         <div class="threads">
@@ -79,8 +83,8 @@
                                       
                                       <h3 class="card-title"><span class="pergunta"><%= thread.getQuestao() %></span></h3>
                                       <div class="botoes-interacao">
-                                      <a href="#" class="btn btn-success">Like (<%= thread.getLikes() %>)</a>
-                                      <a href="#" class="btn btn-danger">Dislike (<%= thread.getDislikes() %>)</a>
+                                      <button class="btn btn-success" onclick="like('<%= thread.getId() %>')">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
+                                      <button class="btn btn-danger" onclick="dislike('<%= thread.getId() %>')">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
                                       <a href="#" class="btn btn-primary">Exibir</a>
                                     </div>
                                     </div>
@@ -94,5 +98,31 @@
                   %>
                   </main>
             </body>
+
+            <script>
+                  
+                  function like(threadId){
+                  const PREFIX = `/threadsapp/threads/like?id=`
+                  const finalURL = PREFIX + threadId;
+                  
+                  fetch(finalURL).then(() => {
+                        const likesNumHTML =  document.querySelector("#likesNum");
+                        const likesNum = Number(likesNumHTML.textContent) + 1;
+                        likesNumHTML.textContent = likesNum;
+                  });
+                  }
+
+                  function dislike(threadId){
+                        const PREFIX = `/threadsapp/threads/dislike?id=`
+                  const finalURL = PREFIX + threadId;
+                  
+                  fetch(finalURL).then(() => {
+                        const dislikesNumHTML =  document.querySelector("#dislikesNum");
+                        const dislikesNum = Number(dislikesNumHTML.textContent) + 1;
+                        dislikesNumHTML.textContent = dislikesNum;
+                  });
+                  } 
+                              
+            </script>
 
             </html>

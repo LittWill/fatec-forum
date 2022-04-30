@@ -99,7 +99,8 @@ public class ThreadDAO {
 
 	}
 	
-	public static void atribuirLike(Thread thread) {
+	public static void atribuirLike(String id) {
+		Thread thread = ThreadDAO.obterThread(id);
 		
 		if (null == thread) return;
 
@@ -119,7 +120,8 @@ public class ThreadDAO {
 	}
 	}
 	
-	public static void atribuirDislike(Thread thread) {
+	public static void atribuirDislike(String id) {
+		Thread thread = ThreadDAO.obterThread(id);
 		
 		if (null == thread) return;
 
