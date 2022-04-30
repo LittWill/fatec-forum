@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
-      <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.wnra.threadsapp.model.Thread"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
             <!DOCTYPE html>
             <html>
 
@@ -27,6 +28,18 @@
                   }
                   .thread {
                         margin-top: 20px;
+                        width: 300px;
+                  }
+                  .autor {
+                        text-decoration: underline;
+                        font-weight: bold;
+                  }
+
+                  .pergunta {
+                        font-size: 18px;
+                  }
+                  .botoes-interacao {
+                        margin-top: 25px;
                   }
             </style>
 
@@ -34,20 +47,38 @@
 
                   <main>
 
-                        <div class="threads">     
+                        <div class="threads">
+                              <%
+                                    List<Thread> threads = (List <Thread>) request.getAttribute("threads");
+
+                                          if (threads == null){
+                                                request.getRequestDispatcher("/threads").forward(request, response);
+                                                return;
+                                          }
+
+                                          for (Thread thread : threads){
+                                                %>
                         <div class="thread">
-                              <div class="card text-center" style="width: 18rem;">
+                              <div class="card text-center" style="width: 25rem;">
                                     <div class="card-body">
-                                      <h5 class="card-title">Por Wilson Rodrigues</h5>
-                                      <p class="card-text">O que buildar para Sylas?</p>
-                                      <a href="#" class="btn btn-success">Like (5)</a>
-                                      <a href="#" class="btn btn-danger">Dislike (10)</a>
+                                      <h5 class="card-title">Por: <span class="autor"><%= thread.getAutorNome() %></span></h5>
+                                      <h4 class="card-title">Categoria: <span class="categoria"><%= thread.getCategoria().getNome() %></span></h4>
+                                      <h3 class="card-text">Data: <span class="categoria"><%= thread.getDataPostagem() %></span></h3>
+                                      <h3 class="card-title">Pergunta: <span class="pergunta"><%= thread.getQuestao() %></span></h3>
+                                      <div class="botoes-interacao">
+                                      <a href="#" class="btn btn-success">Like (<%= thread.getLikes() %>)</a>
+                                      <a href="#" class="btn btn-danger">Dislike (<%= thread.getDislikes() %>)</a>
                                       <a href="#" class="btn btn-primary">Exibir</a>
+                                    </div>
                                     </div>
                                   </div>
                         </div>
 
                   </div>
+
+                  <%
+                               }
+                  %>
                   </main>
             </body>
 

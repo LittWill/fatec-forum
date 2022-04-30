@@ -1,6 +1,7 @@
 package com.wnra.threadsapp;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,14 @@ public class GestaoThreads extends HttpServlet {
 		String path = request.getServletPath();
 		
 		switch (path) {
-			default: request.getRequestDispatcher("/index.jsp").forward(request, response);
+			case "/threads" :
+				List<Thread> threads = ThreadDAO.listarThreads();
+				request.setAttribute("threads", threads);
+				request.getRequestDispatcher("/index.jsp").forward(request,
+						response);
+				break;
+				
+			default: System.err.println("Caminho não esperado!");
 		}
 	}
 
