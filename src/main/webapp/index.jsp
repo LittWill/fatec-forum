@@ -28,15 +28,23 @@
                   }
                   .thread {
                         margin-top: 20px;
-                        width: 300px;
+                        width: 400px;
+                  }
+
+                  li {
+                        display: inline;
+                        list-style: none;
+                        font-size: 18px;
                   }
                   .autor {
-                        text-decoration: underline;
-                        font-weight: bold;
+                        float: left;
                   }
 
                   .pergunta {
-                        font-size: 18px;
+                        font-size: 24px;
+                  }
+                  .data {
+                        float: right;
                   }
                   .botoes-interacao {
                         margin-top: 25px;
@@ -59,12 +67,17 @@
                                           for (Thread thread : threads){
                                                 %>
                         <div class="thread">
-                              <div class="card text-center" style="width: 25rem;">
+                              <div class="card text-center" style="width: 32rem;">
                                     <div class="card-body">
-                                      <h5 class="card-title">Por: <span class="autor"><%= thread.getAutorNome() %></span></h5>
-                                      <h4 class="card-title">Categoria: <span class="categoria"><%= thread.getCategoria().getNome() %></span></h4>
-                                      <h3 class="card-text">Data: <span class="categoria"><%= thread.getDataPostagem() %></span></h3>
-                                      <h3 class="card-title">Pergunta: <span class="pergunta"><%= thread.getQuestao() %></span></h3>
+                                          <div class="top">
+                                                <ul>
+                                                      <li class="autor">Por: <span><%= thread.getAutorNome() %></span></li>
+                                                      <li class="categoria">Categoria: <span><%= thread.getCategoria().getNome() %></span></li>
+                                                      <li class="data">Data: <span><%= thread.getDataPostagemFormatada() %></span></li>
+                                                </ul>
+                                          </div>
+                                      
+                                      <h3 class="card-title"><span class="pergunta"><%= thread.getQuestao() %></span></h3>
                                       <div class="botoes-interacao">
                                       <a href="#" class="btn btn-success">Like (<%= thread.getLikes() %>)</a>
                                       <a href="#" class="btn btn-danger">Dislike (<%= thread.getDislikes() %>)</a>
