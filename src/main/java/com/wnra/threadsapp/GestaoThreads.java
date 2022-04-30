@@ -26,7 +26,9 @@ public class GestaoThreads extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath();
 		
-		System.out.println(CategoriaDAO.listarCategorias());
+		switch (path) {
+			default: request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}
 	}
 
 }

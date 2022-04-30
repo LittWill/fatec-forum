@@ -13,7 +13,7 @@ import com.wnra.threadsapp.model.Thread;
 
 public class ThreadDAO {
 
-	public static boolean salvar(Thread thread) {
+	public static boolean salvarThread(Thread thread) {
 		boolean isThreadSalva = false;
 
 		try {
@@ -53,7 +53,7 @@ public class ThreadDAO {
 						resultado.getString("autor_nome"),
 						(LocalDateTime) resultado.getObject("data_postagem"),
 						CategoriaDAO
-								.obter(resultado.getString("categoria_nome")),
+								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),
 						resultado.getInt("likes"),
 						resultado.getInt("dislikes"));
@@ -82,7 +82,7 @@ public class ThreadDAO {
 						resultado.getString("autor_nome"),
 						(LocalDateTime) resultado.getObject("data_postagem"),
 						CategoriaDAO
-								.obter(resultado.getString("categoria_nome")),
+								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),
 						resultado.getInt("likes"),
 						resultado.getInt("dislikes"));

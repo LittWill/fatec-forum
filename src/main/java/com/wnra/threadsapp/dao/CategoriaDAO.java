@@ -14,7 +14,7 @@ import com.wnra.threadsapp.model.Thread;
 
 public class CategoriaDAO {
 
-	public static Categoria obter(String nome) {
+	public static Categoria obterCategoria(String nome) {
 		Categoria categoria = null;
 		try {
 
