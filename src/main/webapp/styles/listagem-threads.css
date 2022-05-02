@@ -1,0 +1,28 @@
+.threads {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+}
+.thread {
+    margin-top: 20px;
+    width: 400px;
+}
+
+li {
+    display: inline;
+    list-style: none;
+    font-size: 18px;
+}
+.autor {
+    float: left;
+}
+
+.pergunta {
+    font-size: 24px;
+}
+.data {
+    float: right;
+}
+.botoes-interacao {
+    margin-top: 25px;
+}

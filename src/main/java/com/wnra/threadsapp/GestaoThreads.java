@@ -34,7 +34,7 @@ public class GestaoThreads extends HttpServlet {
 			case "/threads" :
 				List<Thread> threads = ThreadDAO.listarThreads();
 				request.setAttribute("threads", threads);
-				request.getRequestDispatcher("/index.jsp").forward(request,
+				request.getRequestDispatcher("/listagem-threads.jsp").forward(request,
 						response);
 				break;
 			case "/threads/like" :
@@ -43,7 +43,7 @@ public class GestaoThreads extends HttpServlet {
 				}
 
 				ThreadDAO.atribuirLike(id);
-				request.getRequestDispatcher("/index.jsp").forward(request,
+				request.getRequestDispatcher("/listagem-threads.jsp").forward(request,
 						response);
 				break;
 			case "/threads/dislike" :
@@ -52,7 +52,7 @@ public class GestaoThreads extends HttpServlet {
 				}
 
 				ThreadDAO.atribuirDislike(id);
-				request.getRequestDispatcher("/index.jsp").forward(request,
+				request.getRequestDispatcher("/listagem-threads.jsp").forward(request,
 						response);
 				break;
 			case "/identificacao" :

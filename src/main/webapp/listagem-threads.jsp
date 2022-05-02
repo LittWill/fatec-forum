@@ -18,43 +18,12 @@
                         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css"
                         integrity="sha512-6/gTF62BJ06BajySRzTm7i8N2ZZ6StspU9uVWDdoBiuuNu5rs1a8VwiJ7skCz2BcvhpipLKfFerXkuzs+npeKA=="
                         crossorigin="anonymous" referrerpolicy="no-referrer" />
+                  <link rel="stylesheet" href="./styles/listagem-threads.css">
                        
             </head>
 
-            <style>
-                  .threads {
-                        width: 250px;
-                        height: 250px;
-                        margin: 0 auto;
-                  }
-                  .thread {
-                        margin-top: 20px;
-                        width: 400px;
-                  }
-
-                  li {
-                        display: inline;
-                        list-style: none;
-                        font-size: 18px;
-                  }
-                  .autor {
-                        float: left;
-                  }
-
-                  .pergunta {
-                        font-size: 24px;
-                  }
-                  .data {
-                        float: right;
-                  }
-                  .botoes-interacao {
-                        margin-top: 25px;
-                  }
-            </style>
-
             <body>
 
-                  
                   <div class="sessao" id="sessao">
                         <span id="nome-usuario">Usuário: </span>
                         <button class="btn btn-danger">Sair</button>
@@ -102,38 +71,6 @@
                   </main>
             </body>
 
-            <script>
+<script src="./js/listagem-threads.js"></script>
 
-                  let botaoConfirmar;
-
-                  function init (){
-                        botaoConfirmar = document.querySelector("#botaoConfirmar");
-                  }
-                  
-                  function like(threadId){
-                  const PREFIX = `/threadsapp/threads/like?id=`
-                  const finalURL = PREFIX + threadId;
-                  
-                  fetch(finalURL).then(() => {
-                        const likesNumHTML =  document.querySelector("#likesNum");
-                        const likesNum = Number(likesNumHTML.textContent) + 1;
-                        likesNumHTML.textContent = likesNum;
-                  });
-                  }
-
-                  function dislike(threadId){
-                  const PREFIX = `/threadsapp/threads/dislike?id=`
-                  const finalURL = PREFIX + threadId;
-                  
-                  fetch(finalURL).then(() => {
-                        const dislikesNumHTML =  document.querySelector("#dislikesNum");
-                        const dislikesNum = Number(dislikesNumHTML.textContent) + 1;
-                        dislikesNumHTML.textContent = dislikesNum;
-                  });
-                  } 
-                              
-            </script>
-
-<script src="./js/index.js"></script>
-
-            </html>
+</html>
