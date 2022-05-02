@@ -20,9 +20,13 @@ function definirComportamentos() {
         event.preventDefault();
         armazenarENavegar();
 
-    })
+    });
     botaoSubmit.addEventListener('click', () => {
         armazenarENavegar();
+    });
+    inputNome.addEventListener('input', () => {
+        const value = inputNome.value;
+        botaoSubmit.disabled = value === '' ? true : false;
     });
 }
 

@@ -23,7 +23,7 @@
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
           <input type="nome" class="nome" id="nome" required>
-          <button type="button" class="btn btn-primary" id="botao-submit">Pronto</button>
+          <button type="button" class="btn btn-primary" id="botao-submit" disabled>Pronto</button>
         </div>        
       </form>
     </div>

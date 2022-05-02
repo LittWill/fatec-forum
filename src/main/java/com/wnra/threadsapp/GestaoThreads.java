@@ -13,9 +13,9 @@ import com.wnra.threadsapp.dao.CategoriaDAO;
 import com.wnra.threadsapp.dao.ThreadDAO;
 import com.wnra.threadsapp.model.Thread;
 
-@WebServlet(urlPatterns = {"/threads", "/threads/like", "/threads/dislike"})
+@WebServlet(urlPatterns = {"/threads", "/threads/like", "/threads/dislike", "/identificacao"})
 public class GestaoThreads extends HttpServlet {
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -35,26 +35,30 @@ public class GestaoThreads extends HttpServlet {
 				request.getRequestDispatcher("/index.jsp").forward(request,
 						response);
 				break;
-			case "/threads/like" : 
+			case "/threads/like" :
 				if (null == id) {
-					throw new RuntimeException ("Thread não encontrada!");
+					throw new RuntimeException("Thread não encontrada!");
 				}
-				
+
 				ThreadDAO.atribuirLike(id);
 				request.getRequestDispatcher("/index.jsp").forward(request,
 						response);
 				break;
-			case "/threads/dislike" : 
+			case "/threads/dislike" :
 				if (null == id) {
-					throw new RuntimeException ("Thread não encontrada!");
+					throw new RuntimeException("Thread não encontrada!");
 				}
-				
+
 				ThreadDAO.atribuirDislike(id);
 				request.getRequestDispatcher("/index.jsp").forward(request,
 						response);
 				break;
-				
-			default: System.err.println("Caminho não esperado!");
+			case "/identificacao" :
+				request.getRequestDispatcher("/identificacao.jsp").forward(request,
+						response);
+				break;
+			default :
+				System.err.println("Caminho não esperado!");
 		}
 	}
 
