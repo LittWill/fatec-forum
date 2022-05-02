@@ -53,10 +53,6 @@
 
             <body>
 
-                  <div class="area-identificacao">
-                        <label for="">Insira seu nome para criar uma pergunta</label>
-                  </div>
-
                   <main>
 
                         <div class="threads">
@@ -85,7 +81,7 @@
                                       <div class="botoes-interacao">
                                       <button class="btn btn-success" onclick="like('<%= thread.getId() %>')">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
                                       <button class="btn btn-danger" onclick="dislike('<%= thread.getId() %>')">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
-                                      <a href="#" class="btn btn-primary">Exibir</a>
+                                      <a href="#" class="btn btn-primary">Ver respostas</a>
                                     </div>
                                     </div>
                                   </div>
@@ -100,6 +96,15 @@
             </body>
 
             <script>
+
+                  let botaoConfirmar;
+                  let botaoSair;
+
+                  function init (){
+                        botaoConfirmar = document.querySelector("#botaoConfirmar");
+                        botaoSair = document.querySelector("#botaoSair");
+
+                  }
                   
                   function like(threadId){
                   const PREFIX = `/threadsapp/threads/like?id=`
@@ -113,7 +118,7 @@
                   }
 
                   function dislike(threadId){
-                        const PREFIX = `/threadsapp/threads/dislike?id=`
+                  const PREFIX = `/threadsapp/threads/dislike?id=`
                   const finalURL = PREFIX + threadId;
                   
                   fetch(finalURL).then(() => {
