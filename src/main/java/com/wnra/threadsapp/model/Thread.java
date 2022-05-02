@@ -2,6 +2,7 @@ package com.wnra.threadsapp.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 public class Thread {
@@ -13,9 +14,10 @@ public class Thread {
 	private String questao;
 	private int likes;
 	private int dislikes;
+	private List<Resposta> respostas;
 	
 	public Thread(String id, String autorNome, LocalDateTime dataPostagem,
-			Categoria categoria, String questao, int likes, int dislikes) {
+			Categoria categoria, String questao, int likes, int dislikes, List<Resposta> respostas) {
 		this.id = id;
 		this.autorNome = autorNome;
 		this.dataPostagem = dataPostagem;
@@ -23,6 +25,7 @@ public class Thread {
 		this.questao = questao;
 		this.likes = likes;
 		this.dislikes = dislikes;
+		this.respostas = respostas;
 	}
 	public Thread(String autorNome, Categoria categoria,
 			String questao) {
@@ -79,6 +82,13 @@ public class Thread {
 	}
 	public void setLikes(int likes) {
 		this.likes = likes;
+	}
+	
+	public List<Resposta> getRespostas() {
+		return respostas;
+	}
+	public void setRespostas(List<Resposta> respostas) {
+		this.respostas = respostas;
 	}
 	@Override
 	public String toString() {

@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wnra.threadsapp.dao.CategoriaDAO;
+import com.wnra.threadsapp.dao.RespostaDAO;
 import com.wnra.threadsapp.dao.ThreadDAO;
+import com.wnra.threadsapp.model.Resposta;
 import com.wnra.threadsapp.model.Thread;
 
 @WebServlet(urlPatterns = {"/threads", "/threads/like", "/threads/dislike", "/identificacao"})

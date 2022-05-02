@@ -56,7 +56,8 @@ public class ThreadDAO {
 								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),
 						resultado.getInt("likes"),
-						resultado.getInt("dislikes"));
+						resultado.getInt("dislikes"),
+						RespostaDAO.obterRespostasThread(id));
 			}
 
 			conexao.close();
@@ -85,7 +86,8 @@ public class ThreadDAO {
 								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),
 						resultado.getInt("likes"),
-						resultado.getInt("dislikes"));
+						resultado.getInt("dislikes"),
+						RespostaDAO.obterRespostasThread(resultado.getString("id")));
 
 				threads.add(thread);
 			}
