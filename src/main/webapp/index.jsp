@@ -88,7 +88,7 @@
                                       <div class="botoes-interacao">
                                       <button class="btn btn-success" onclick="like('<%= thread.getId() %>')">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
                                       <button class="btn btn-danger" onclick="dislike('<%= thread.getId() %>')">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
-                                      <a href="#" class="btn btn-primary">Ver respostas</a>
+                                      <a href="#" class="btn btn-primary">Respostas (<%= thread.getRespostas().size() %>)</a>
                                     </div>
                                     </div>
                                   </div>
