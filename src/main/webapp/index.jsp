@@ -18,6 +18,7 @@
                         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css"
                         integrity="sha512-6/gTF62BJ06BajySRzTm7i8N2ZZ6StspU9uVWDdoBiuuNu5rs1a8VwiJ7skCz2BcvhpipLKfFerXkuzs+npeKA=="
                         crossorigin="anonymous" referrerpolicy="no-referrer" />
+                       
             </head>
 
             <style>
@@ -52,6 +53,12 @@
             </style>
 
             <body>
+
+                  
+                  <div class="sessao" id="sessao">
+                        <span id="nome-usuario">Usuário: </span>
+                        <button class="btn btn-danger">Sair</button>
+                  </div>
 
                   <main>
 
@@ -98,12 +105,9 @@
             <script>
 
                   let botaoConfirmar;
-                  let botaoSair;
 
                   function init (){
                         botaoConfirmar = document.querySelector("#botaoConfirmar");
-                        botaoSair = document.querySelector("#botaoSair");
-
                   }
                   
                   function like(threadId){
@@ -129,5 +133,7 @@
                   } 
                               
             </script>
+
+<script src="./js/index.js"></script>
 
             </html>

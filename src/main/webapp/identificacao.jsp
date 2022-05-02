@@ -15,7 +15,7 @@
 </head>
 <body>
 
-    <div class="container" style="width: 400px;">
+    <div class="container mt-3" style="width: 400px;">
 
     <h2>Olá! Insira seu nome antes de começar!</h2>
 
@@ -23,9 +23,8 @@
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
           <input type="nome" class="nome" id="nome" required>
-        </div>
-
-        <button type="button" class="btn btn-primary" id="botao-submit">Pronto</button>
+          <button type="button" class="btn btn-primary" id="botao-submit">Pronto</button>
+        </div>        
       </form>
     </div>
     
