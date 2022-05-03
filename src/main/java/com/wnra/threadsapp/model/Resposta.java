@@ -1,6 +1,7 @@
 package com.wnra.threadsapp.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class Resposta {
@@ -48,6 +49,11 @@ public class Resposta {
 
 	public void setDataPostagem(LocalDateTime dataPostagem) {
 		this.dataPostagem = dataPostagem;
+	}
+	
+	public String getDataPostagemFormatada() {
+		DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		return this.dataPostagem.format(pattern);
 	}
 
 	public Thread getThread() {

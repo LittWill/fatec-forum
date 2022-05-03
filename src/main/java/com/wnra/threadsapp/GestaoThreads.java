@@ -15,7 +15,8 @@ import com.wnra.threadsapp.dao.ThreadDAO;
 import com.wnra.threadsapp.model.Resposta;
 import com.wnra.threadsapp.model.Thread;
 
-@WebServlet(urlPatterns = {"/threads", "/threads/like", "/threads/dislike", "/identificacao"})
+@WebServlet(urlPatterns = {"/threads", "/threads/like", "/threads/dislike",
+		"/threads/respostas", "/identificacao"})
 public class GestaoThreads extends HttpServlet {
 
 	@Override
@@ -34,8 +35,8 @@ public class GestaoThreads extends HttpServlet {
 			case "/threads" :
 				List<Thread> threads = ThreadDAO.listarThreads();
 				request.setAttribute("threads", threads);
-				request.getRequestDispatcher("/listagem-threads.jsp").forward(request,
-						response);
+				request.getRequestDispatcher("/listagem-threads.jsp")
+						.forward(request, response);
 				break;
 			case "/threads/like" :
 				if (null == id) {
@@ -43,8 +44,8 @@ public class GestaoThreads extends HttpServlet {
 				}
 
 				ThreadDAO.atribuirLike(id);
-				request.getRequestDispatcher("/listagem-threads.jsp").forward(request,
-						response);
+				request.getRequestDispatcher("/listagem-threads.jsp")
+						.forward(request, response);
 				break;
 			case "/threads/dislike" :
 				if (null == id) {
@@ -52,12 +53,21 @@ public class GestaoThreads extends HttpServlet {
 				}
 
 				ThreadDAO.atribuirDislike(id);
-				request.getRequestDispatcher("/listagem-threads.jsp").forward(request,
-						response);
+				break;
+
+			case "/threads/respostas" :
+				if (null == id) {
+					throw new RuntimeException("Thread não encontrada!");
+				}
+
+				Thread threadObtida = ThreadDAO.obterThread(id);
+				request.setAttribute("thread", threadObtida);
+				request.getRequestDispatcher("/listagem-respostas.jsp")
+						.forward(request, response);
 				break;
 			case "/identificacao" :
-				request.getRequestDispatcher("/identificacao.jsp").forward(request,
-						response);
+				request.getRequestDispatcher("/identificacao.jsp")
+						.forward(request, response);
 				break;
 			default :
 				System.err.println("Caminho não esperado!");
