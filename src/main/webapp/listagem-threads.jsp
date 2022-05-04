@@ -43,6 +43,9 @@
                                           for (Thread thread : threads){
                                                 %>
                         <div class="thread">
+
+                              <input type="hidden" id="thread-id" value="<%=thread.getId()%>">
+
                               <div class="card text-center" style="width: 32rem;">
                                     <div class="card-body">
                                           <div class="top">
@@ -55,9 +58,9 @@
                                       
                                       <h3 class="card-title"><span class="pergunta"><%= thread.getQuestao() %></span></h3>
                                       <div class="botoes-interacao">
-                                      <button class="btn btn-success" onclick="like('<%= thread.getId() %>')">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
-                                      <button class="btn btn-danger" onclick="dislike('<%= thread.getId() %>')">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
-                                      <a href="/threadsapp/threads/respostas?id=<%=thread.getId()%>" class="btn btn-primary">Respostas (<%= thread.getRespostas().size() %>)</a>
+                                      <button class="btn btn-success" id="btn-like">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
+                                      <button class="btn btn-danger" id="btn-dislike">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
+                                      <a href="/threadsapp/threads?acao=respostas&id=<%=thread.getId()%>" class="btn btn-primary">Respostas (<%= thread.getRespostas().size() %>)</a>
                                     </div>
                                     </div>
                                   </div>
@@ -71,6 +74,6 @@
                   </main>
             </body>
 
-<script src="./js/listagem-threads.js"></script>
+<script src="./js/listagem-threads.js" type="module" def></script>
 
 </html>

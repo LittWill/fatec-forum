@@ -11,6 +11,8 @@ public class Resposta {
 	private String texto;
 	private LocalDateTime dataPostagem;
 	private Thread thread;
+	private int likes;
+	private int dislikes;
 	
 
 	public Resposta(String texto, String autorNome, Thread thread) {
@@ -21,10 +23,12 @@ public class Resposta {
 		this.thread = thread;
 	}
 	
-	public Resposta(String texto, String autorNome, LocalDateTime dataPostagem) {
+	public Resposta(String texto, String autorNome, LocalDateTime dataPostagem, int likes, int dislikes) {
 		this.texto = texto;
 		this.autorNome = autorNome;
 		this.dataPostagem = dataPostagem;
+		this.likes = likes;
+		this.dislikes = dislikes;
 	}
 
 	public String getId() {
@@ -71,6 +75,24 @@ public class Resposta {
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public int getDislikes() {
+		return dislikes;
+	}
+
+	public void setDislikes(int dislikes) {
+		this.dislikes = dislikes;
+	}
+	
+	
 	
 	
 }

@@ -38,10 +38,8 @@ function isSessaoValida() {
 }
 
 function like(threadId) {
-    const PREFIX = `/threadsapp/threads/like?id=`
-    const finalURL = PREFIX + threadId;
-
-    fetch(finalURL).then(() => {
+    likePergunta(threadId).then(() => {
+        console.log('like');
         const likesNumHTML = document.querySelector("#likesNum");
         const likesNum = Number(likesNumHTML.textContent) + 1;
         likesNumHTML.textContent = likesNum;
@@ -49,10 +47,7 @@ function like(threadId) {
 }
 
 function dislike(threadId) {
-    const PREFIX = `/threadsapp/threads/dislike?id=`
-    const finalURL = PREFIX + threadId;
-
-    fetch(finalURL).then(() => {
+    dislikePergunta(threadId).then(() => {
         const dislikesNumHTML = document.querySelector("#dislikesNum");
         const dislikesNum = Number(dislikesNumHTML.textContent) + 1;
         dislikesNumHTML.textContent = dislikesNum;

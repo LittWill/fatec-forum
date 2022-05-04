@@ -9,14 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wnra.threadsapp.dao.CategoriaDAO;
-import com.wnra.threadsapp.dao.RespostaDAO;
 import com.wnra.threadsapp.dao.ThreadDAO;
-import com.wnra.threadsapp.model.Resposta;
 import com.wnra.threadsapp.model.Thread;
 
-@WebServlet(urlPatterns = {"/threads", "/threads/like", "/threads/dislike",
-		"/threads/respostas", "/identificacao"})
+@WebServlet(urlPatterns = {"/threads"})
 public class GestaoThreads extends HttpServlet {
 
 	@Override
@@ -31,23 +27,25 @@ public class GestaoThreads extends HttpServlet {
 		String path = request.getServletPath();
 		System.out.println(path);
 		String id = request.getParameter("id");
-		switch (path) {
-			case "/threads" :
+		String acao = request.getParameter("acao");
+
+		switch (acao) {
+
+			case "listar" :
 				List<Thread> threads = ThreadDAO.listarThreads();
 				request.setAttribute("threads", threads);
 				request.getRequestDispatcher("/listagem-threads.jsp")
 						.forward(request, response);
 				break;
-			case "/threads/like" :
+
+			case "like" :
 				if (null == id) {
 					throw new RuntimeException("Thread não encontrada!");
 				}
 
 				ThreadDAO.atribuirLike(id);
-				request.getRequestDispatcher("/listagem-threads.jsp")
-						.forward(request, response);
 				break;
-			case "/threads/dislike" :
+			case "dislike" :
 				if (null == id) {
 					throw new RuntimeException("Thread não encontrada!");
 				}
@@ -55,7 +53,7 @@ public class GestaoThreads extends HttpServlet {
 				ThreadDAO.atribuirDislike(id);
 				break;
 
-			case "/threads/respostas" :
+			case "respostas" :
 				if (null == id) {
 					throw new RuntimeException("Thread não encontrada!");
 				}
@@ -65,12 +63,13 @@ public class GestaoThreads extends HttpServlet {
 				request.getRequestDispatcher("/listagem-respostas.jsp")
 						.forward(request, response);
 				break;
-			case "/identificacao" :
+
+			case "identificar" :
 				request.getRequestDispatcher("/identificacao.jsp")
 						.forward(request, response);
 				break;
 			default :
-				System.err.println("Caminho não esperado!");
+				System.err.println("Ação não esperada!");
 		}
 	}
 

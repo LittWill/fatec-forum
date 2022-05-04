@@ -14,7 +14,7 @@ import com.wnra.threadsapp.model.Resposta;
 import com.wnra.threadsapp.model.Thread;
 
 public class RespostaDAO {
-	
+
 	public static void salvarResposta(Resposta resposta) {
 		try {
 			Connection conexao = DBConnection.start();
@@ -34,19 +34,26 @@ public class RespostaDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	public static List <Resposta> obterRespostasThread(String threadId) {
-		List <Resposta> respostas = new ArrayList<>();
+
+	public static List<Resposta> obterRespostasThread(String threadId) {
+		List<Resposta> respostas = new ArrayList<>();
 		try {
 
 			Connection conexao = DBConnection.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
-					"SELECT autor_nome, texto, data_postagem FROM resposta WHERE thread_id=?");
+					"SELECT autor_nome, texto, data_postagem, likes, dislikes FROM resposta WHERE thread_id=?");
 			sql.setString(1, threadId);
 			ResultSet resultado = sql.executeQuery();
 			while (resultado.next()) {
-				Resposta resposta = new Resposta(resultado.getString("texto"), resultado.getString("autor_nome"), LocalDateTime.parse(resultado.getString("data_postagem"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+				Resposta resposta = new Resposta(resultado.getString("texto"),
+						resultado.getString("autor_nome"),
+						LocalDateTime.parse(
+								resultado.getString("data_postagem"),
+								DateTimeFormatter
+										.ofPattern("yyyy-MM-dd HH:mm:ss")),
+						resultado.getInt("likes"),
+						resultado.getInt("dislikes"));
 				respostas.add(resposta);
 			}
 
