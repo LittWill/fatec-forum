@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.wnra.threadsapp.db.DBConnection;
+import com.wnra.threadsapp.db.DBConnectionMySQL;
 import com.wnra.threadsapp.model.Thread;
 
 public class ThreadDAO {
@@ -17,7 +20,7 @@ public class ThreadDAO {
 		boolean isThreadSalva = false;
 
 		try {
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"INSERT INTO thread (id, autor_nome, data_postagem, categoria_nome, questao) VALUES(?, ?, ?, ?, ?)");
@@ -42,22 +45,26 @@ public class ThreadDAO {
 		Thread thread = null;
 		try {
 
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"SELECT id, autor_nome, data_postagem, categoria_nome, questao, likes, dislikes FROM thread WHERE id=?");
 			sql.setString(1, id);
 			ResultSet resultado = sql.executeQuery();
+			
 			while (resultado.next()) {
+				Date date = resultado.getDate("data_postagem");
 				thread = new Thread(resultado.getString("id"),
 						resultado.getString("autor_nome"),
-						(LocalDateTime) resultado.getObject("data_postagem"),
+						Instant.ofEpochMilli(date.getTime())
+					      .atZone(ZoneId.systemDefault())
+					      .toLocalDateTime(),
 						CategoriaDAO
 								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),
 						resultado.getInt("likes"),
 						resultado.getInt("dislikes"),
-						RespostaDAO.obterRespostasThread(id));
+						RespostaDAO.listarRespostas(id));
 			}
 
 			conexao.close();
@@ -73,21 +80,24 @@ public class ThreadDAO {
 
 		try {
 
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"SELECT id, autor_nome, data_postagem, categoria_nome, questao, likes, dislikes FROM thread");
 			ResultSet resultado = sql.executeQuery();
 			while (resultado.next()) {
+				Date date = resultado.getDate("data_postagem");
 				Thread thread = new Thread(resultado.getString("id"),
 						resultado.getString("autor_nome"),
-						(LocalDateTime) resultado.getObject("data_postagem"),
+						Instant.ofEpochMilli(date.getTime())
+					      .atZone(ZoneId.systemDefault())
+					      .toLocalDateTime(),
 						CategoriaDAO
 								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),
 						resultado.getInt("likes"),
 						resultado.getInt("dislikes"),
-						RespostaDAO.obterRespostasThread(resultado.getString("id")));
+						RespostaDAO.listarRespostas(resultado.getString("id")));
 
 				threads.add(thread);
 			}
@@ -103,11 +113,12 @@ public class ThreadDAO {
 	
 	public static void atribuirLike(String id) {
 		Thread thread = ThreadDAO.obterThread(id);
+		System.out.println(thread.getQuestao());
 		
 		if (null == thread) return;
 
 		try {
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"UPDATE thread SET likes=? WHERE id=?");
@@ -128,7 +139,7 @@ public class ThreadDAO {
 		if (null == thread) return;
 
 		try {
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"UPDATE thread SET dislikes=? WHERE id=?");

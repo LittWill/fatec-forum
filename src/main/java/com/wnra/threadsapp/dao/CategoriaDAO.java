@@ -4,13 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wnra.threadsapp.db.DBConnection;
+import com.wnra.threadsapp.db.DBConnectionMySQL;
 import com.wnra.threadsapp.model.Categoria;
-import com.wnra.threadsapp.model.Thread;
 
 public class CategoriaDAO {
 
@@ -18,7 +16,7 @@ public class CategoriaDAO {
 		Categoria categoria = null;
 		try {
 
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"SELECT nome FROM categoria WHERE nome=?");
@@ -39,7 +37,7 @@ public class CategoriaDAO {
 	public static List<Categoria> listarCategorias() {
 		List<Categoria> categorias = new ArrayList<>();
 		try {
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao
 					.prepareStatement("SELECT nome FROM categoria");

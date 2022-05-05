@@ -32,7 +32,7 @@ function definirComportamentos() {
 
 function armazenarENavegar(){
     localStorage.setItem('nomeUsuario', JSON.stringify(inputNome.value))
-    location.href = '/threadsapp/threads';
+    location.href = '/threadsapp/threads?acao=listar';
 }
 
 init();

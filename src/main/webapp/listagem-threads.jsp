@@ -58,22 +58,26 @@
                                       
                                       <h3 class="card-title"><span class="pergunta"><%= thread.getQuestao() %></span></h3>
                                       <div class="botoes-interacao">
-                                      <button class="btn btn-success" id="btn-like">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
-                                      <button class="btn btn-danger" id="btn-dislike">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
-                                      <a href="/threadsapp/threads?acao=respostas&id=<%=thread.getId()%>" class="btn btn-primary">Respostas (<%= thread.getRespostas().size() %>)</a>
+                                      <button class="btn btn-success" id="btn-like" onclick="likeThread('<%= thread.getId() %>')">Like (<span id="likesNum-<%= thread.getId() %>"><%=thread.getLikes()%></span>)</button>
+                                      <button class="btn btn-danger" id="btn-dislike" onclick="dislikeThread('<%= thread.getId() %>')">Dislike (<span id="dislikesNum-<%= thread.getId() %>"><%=thread.getDislikes()%></span>)</button>
+                                      <a href="/threadsapp/respostas?acao=listar&id=<%=thread.getId()%>" class="btn btn-primary">Respostas (<%= thread.getRespostas().size() %>)</a>
                                     </div>
                                     </div>
                                   </div>
+
+                                  <%
+                               }
+                        %>
                         </div>
+
+                        
 
                   </div>
 
-                  <%
-                               }
-                  %>
+                  
                   </main>
             </body>
 
-<script src="./js/listagem-threads.js" type="module" def></script>
+<script src="./js/listagem-threads.js" defer></script>
 
 </html>

@@ -17,7 +17,7 @@
 
     <div class="container mt-3" style="width: 400px;">
 
-    <h2>Olá! Insira seu nome antes de começar!</h2>
+    <h2>Olá! Insira seu nome antes de começar</h2>
 
     <form>
         <div class="mb-3">

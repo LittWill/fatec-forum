@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.wnra.threadsapp.db.DBConnection;
+import com.wnra.threadsapp.db.DBConnectionMySQL;
 import com.wnra.threadsapp.model.Resposta;
 import com.wnra.threadsapp.model.Thread;
 
@@ -17,7 +21,7 @@ public class RespostaDAO {
 
 	public static void salvarResposta(Resposta resposta) {
 		try {
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"INSERT INTO resposta (id, autor_nome, texto, data_postagem, thread_id) VALUES(?, ?, ?, ?, ?)");
@@ -34,26 +38,61 @@ public class RespostaDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public static Resposta obterResposta(String id) {
+		Resposta resposta = null;
+		try {
 
-	public static List<Resposta> obterRespostasThread(String threadId) {
+			Connection conexao = DBConnectionMySQL.start();
+
+			PreparedStatement sql = conexao.prepareStatement(
+					"SELECT id, autor_nome, data_postagem, texto, questao, likes, dislikes FROM resposta WHERE id=?");
+			sql.setString(1, id);
+			ResultSet resultado = sql.executeQuery();
+			
+			while (resultado.next()) {
+				Date date = resultado.getDate("data_postagem");
+				String texto = resultado.getString("texto");
+				String autorNome = resultado.getString("autor_nome");
+				LocalDateTime dataPostagem = Instant.ofEpochMilli(date.getTime())
+					      .atZone(ZoneId.systemDefault())
+					      .toLocalDateTime();
+				int likes = resultado.getInt("likes");
+				int dislikes = resultado.getInt("dislikes");
+				resposta = new Resposta(texto, autorNome, dataPostagem, likes, dislikes);
+				
+			}
+
+			conexao.close();
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return resposta;
+
+	}
+
+	public static List<Resposta> listarRespostas(String threadId) {
 		List<Resposta> respostas = new ArrayList<>();
 		try {
 
-			Connection conexao = DBConnection.start();
+			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
 					"SELECT autor_nome, texto, data_postagem, likes, dislikes FROM resposta WHERE thread_id=?");
 			sql.setString(1, threadId);
 			ResultSet resultado = sql.executeQuery();
 			while (resultado.next()) {
-				Resposta resposta = new Resposta(resultado.getString("texto"),
-						resultado.getString("autor_nome"),
-						LocalDateTime.parse(
-								resultado.getString("data_postagem"),
-								DateTimeFormatter
-										.ofPattern("yyyy-MM-dd HH:mm:ss")),
-						resultado.getInt("likes"),
-						resultado.getInt("dislikes"));
+				Date date = resultado.getDate("data_postagem");
+				String texto = resultado.getString("texto");
+				String autorNome = resultado.getString("autor_nome");
+				LocalDateTime dataPostagem = Instant.ofEpochMilli(date.getTime())
+					      .atZone(ZoneId.systemDefault())
+					      .toLocalDateTime();
+				int likes = resultado.getInt("likes");
+				int dislikes = resultado.getInt("dislikes");
+				
+				Resposta resposta = new Resposta(texto, autorNome, dataPostagem, likes, dislikes);
+				
 				respostas.add(resposta);
 			}
 
@@ -64,5 +103,48 @@ public class RespostaDAO {
 		return respostas;
 
 	}
+	
+	public static void atribuirLike(String id) {
+		Resposta resposta = RespostaDAO.obterResposta(id);
+		
+		if (null == resposta) return;
 
+		try {
+			Connection conexao = DBConnectionMySQL.start();
+
+			PreparedStatement sql = conexao.prepareStatement(
+					"UPDATE resposta SET likes=? WHERE id=?");
+			sql.setInt(1, resposta.getLikes() + 1);
+			sql.setString(2, resposta.getId());
+			sql.executeUpdate();
+			conexao.close();
+		}
+
+		catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+	}
+	}
+	
+	public static void atribuirDislike(String id) {
+		Resposta resposta = RespostaDAO.obterResposta(id);
+		
+		if (null == resposta) return;
+
+		try {
+			Connection conexao = DBConnectionMySQL.start();
+
+			PreparedStatement sql = conexao.prepareStatement(
+					"UPDATE resposta SET dislikes=? WHERE id=?");
+			sql.setInt(1, resposta.getDislikes() + 1);
+			sql.setString(2, resposta.getId());
+			sql.executeUpdate();
+			conexao.close();
+		}
+
+		catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+	}
+
+}
+	
 }
