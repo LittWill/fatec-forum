@@ -42,13 +42,25 @@ public class GestaoThreads extends HttpServlet {
 
 			switch (acao) {
 
-			case "inserir": {
+			case "criar": {
+				List<Categoria> categorias = CategoriaDAO.listarCategorias();
+				request.setAttribute("categorias", categorias);
+				request.getRequestDispatcher("/criar-thread.jsp").forward(request, response);
+				break;
+			}
+			
+			case "salvar": {
 				String autorNome = request.getParameter("autorNome");
 				Categoria categoria = CategoriaDAO.obterCategoria(request.getParameter("categoria"));
 				String questao = request.getParameter("questao");
 				Thread thread = new Thread(autorNome, categoria, questao);
 				ThreadDAO.salvarThread(thread);
+				
+				List<Thread> threads = ThreadDAO.listarThreads();
+				request.setAttribute("threads", threads);
+				request.getRequestDispatcher("/listagem-threads.jsp").forward(request, response);
 				break;
+				
 			}
 
 			case "listar":

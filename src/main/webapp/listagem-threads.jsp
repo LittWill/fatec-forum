@@ -57,11 +57,6 @@
                               <%
                                     List<Thread> threads = (List <Thread>) request.getAttribute("threads");
 
-                                          if (threads == null){
-                                                request.getRequestDispatcher("/threads").forward(request, response);
-                                                return;
-                                          }
-
                                           for (Thread thread : threads){
                                                 %>
                         <div class="thread">
@@ -104,6 +99,6 @@
             </body>
 
 <script src="./js/listagem-threads.js" defer></script>
-<script src="./js/navbar-service.js" defer></script>
+<script src="./js/navbar-service.js" defe></script>
 
 </html>
