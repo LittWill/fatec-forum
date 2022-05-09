@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -51,14 +52,15 @@ public class ThreadDAO {
 					"SELECT id, autor_nome, data_postagem, categoria_nome, questao, likes, dislikes FROM thread WHERE id=?");
 			sql.setString(1, id);
 			ResultSet resultado = sql.executeQuery();
-			
+			/*Instant.ofEpochMilli(date.getTime())
+		      .atZone(ZoneId.systemDefault())
+		      .toLocalDateTime()
+		      */
 			while (resultado.next()) {
-				Date date = resultado.getDate("data_postagem");
+				//Date date = resultado.getDate("data_postagem");
 				thread = new Thread(resultado.getString("id"),
 						resultado.getString("autor_nome"),
-						Instant.ofEpochMilli(date.getTime())
-					      .atZone(ZoneId.systemDefault())
-					      .toLocalDateTime(),
+						resultado.getObject("data_postagem", LocalDateTime.class),
 						CategoriaDAO
 								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),
@@ -86,12 +88,10 @@ public class ThreadDAO {
 					"SELECT id, autor_nome, data_postagem, categoria_nome, questao, likes, dislikes FROM thread");
 			ResultSet resultado = sql.executeQuery();
 			while (resultado.next()) {
-				Date date = resultado.getDate("data_postagem");
+				//Date date = resultado.getDate("data_postagem");
 				Thread thread = new Thread(resultado.getString("id"),
 						resultado.getString("autor_nome"),
-						Instant.ofEpochMilli(date.getTime())
-					      .atZone(ZoneId.systemDefault())
-					      .toLocalDateTime(),
+						resultado.getObject("data_postagem", LocalDateTime.class),
 						CategoriaDAO
 								.obterCategoria(resultado.getString("categoria_nome")),
 						resultado.getString("questao"),

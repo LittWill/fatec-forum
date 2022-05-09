@@ -32,11 +32,16 @@
                           </button>
                           <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                              <li class="nav-item">
+                                    <a class="nav-link" href="/threadsapp/threads?acao=criar">Criar</a>
+                                  </li>
                             <form class="d-flex">
                               <input class="form-control me-2" type="search" placeholder="Ex.: Como ocorre a chuva?" aria-label="Search">
                               <button class="btn btn-outline-success" type="submit">Buscar</button>
                             </form>
                           </div>
+
+                          
 
                           <li class="nav-item">
                               <div class="sessao" id="sessao">
@@ -77,7 +82,7 @@
                                       <div class="botoes-interacao">
                                       <button class="btn btn-success" id="btn-like" onclick="likeThread('<%= thread.getId() %>')">Like (<span id="likesNum-<%= thread.getId() %>"><%=thread.getLikes()%></span>)</button>
                                       <button class="btn btn-danger" id="btn-dislike" onclick="dislikeThread('<%= thread.getId() %>')">Dislike (<span id="dislikesNum-<%= thread.getId() %>"><%=thread.getDislikes()%></span>)</button>
-                                      <a href="/threadsapp/respostas?acao=listar&id=<%=thread.getId()%>" class="btn btn-primary">Respostas (<%= thread.getRespostas().size() %>)</a>
+                                      <a href="/threadsapp/respostas?acao=listar&threadId=<%=thread.getId()%>" class="btn btn-primary">Respostas (<%= thread.getRespostas().size() %>)</a>
                                     </div>
                                     </div>
                                   </div>

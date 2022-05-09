@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.wnra.threadsapp.dao.CategoriaDAO"%>
-<%@ page import="com.wnra.threadsapp.model.Categoria"%>
+<%@ page import="com.wnra.threadsapp.model.Thread"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -46,30 +45,19 @@
 
     <div class="container mt-3" style="width: 400px;">
 
-    <h2>Criar Thread</h2>
+    <h2>Responder</h2>
 
-    <form method="post" action="/threadsapp/threads?acao=salvar">
+    <form method="post" action="/threadsapp/respostas?acao=salvar">
+
+      <% 
+      Thread thread = (Thread) request.getAttribute("thread");
+      %>
       
         <div class="mb-3">
           <input type="hidden" name="autorNome" id="autorNome">
-          <div>
-          <label for="categoria">Categoria</label>
-            <select name="categoria" id="categoria">
-                <% 
-                
-                List<Categoria> categorias = (List <Categoria>) request.getAttribute("categorias");
-
-                  for (Categoria categoria : categorias){
-              %>
-                <option value="<%=categoria.getNome()%>"><%=categoria.getNome()%></option>
-                <%
-                  }
-                %>
-                 
-            </select>
-          </div>
-          <label for="questao" class="form-label">Questão</label>
-          <input type="text" class="questao" name="questao" id="questao" required>
+          <input type="hidden" name="threadId" id="threadId" value='<%=thread.getId()%>'>
+          <label for="texto" class="form-label">Resposta</label>
+          <input type="text" class="questao" name="texto" id="texto" required>
           <button type="submit" class="btn btn-primary" id="botao-submit">Postar</button>
         </div>        
       </form>
@@ -78,7 +66,7 @@
 </body>
 
 <script src="./js/criar-thread.js" defer></script>
+<script src="./js/criar-resposta.js" defer></script>
 <script src="./js/navbar-service.js" defer></script>
-
 
 </html>

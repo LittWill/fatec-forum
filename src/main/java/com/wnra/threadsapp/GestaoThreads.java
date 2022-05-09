@@ -99,24 +99,36 @@ public class GestaoThreads extends HttpServlet {
 		else if (path.equals("/respostas")) {
 
 			switch (acao) {
+				
+			case "criar": {
+					String threadId = request.getParameter("threadId");
+					Thread thread = ThreadDAO.obterThread(threadId);
+					if (null == thread) {
+						throw new RuntimeException("Thread não encontrada!");
+					}
+					request.setAttribute("thread", thread);
+					request.getRequestDispatcher("/criar-resposta.jsp").forward(request, response);
+					break;
+			}
 
-			case "inserir": {
+			case "salvar": {
 				String autorNome = request.getParameter("autorNome");
 				String texto = request.getParameter("texto");
 				String threadId = request.getParameter("threadId");
-
-				Resposta resposta = new Resposta(texto, autorNome, ThreadDAO.obterThread(threadId));
+				
+				Thread thread = ThreadDAO.obterThread(threadId);
+				Resposta resposta = new Resposta(texto, autorNome, thread);
 				RespostaDAO.salvarResposta(resposta);
-				break;
 			}
 
 			case "listar": {
-				String id = request.getParameter("id");
-				if (null == id) {
+				System.out.println("ok");
+				String threadId = request.getParameter("threadId");
+				if (null == threadId) {
 					throw new RuntimeException("Thread não encontrada!");
 				}
 
-				Thread threadObtida = ThreadDAO.obterThread(id);
+				Thread threadObtida = ThreadDAO.obterThread(threadId);
 				request.setAttribute("thread", threadObtida);
 				request.getRequestDispatcher("/listagem-respostas.jsp").forward(request, response);
 				break;

@@ -126,6 +126,10 @@
                         </div>
                         <% } %>
 
+                        <a href="/threadsapp/respostas?acao=criar&threadId=<%=thread.getId()%>">Criar resposta</a>
+
+                        
+
                     </main>
 
                 </body>

@@ -11,8 +11,8 @@ public class Resposta {
 	private String texto;
 	private LocalDateTime dataPostagem;
 	private Thread thread;
-	private int likes;
-	private int dislikes;
+	private int likes = 0;
+	private int dislikes = 0;
 	
 
 	public Resposta(String texto, String autorNome, Thread thread) {

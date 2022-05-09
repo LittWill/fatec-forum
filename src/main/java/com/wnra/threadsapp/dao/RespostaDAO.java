@@ -54,9 +54,12 @@ public class RespostaDAO {
 				Date date = resultado.getDate("data_postagem");
 				String texto = resultado.getString("texto");
 				String autorNome = resultado.getString("autor_nome");
-				LocalDateTime dataPostagem = Instant.ofEpochMilli(date.getTime())
+				/*LocalDateTime dataPostagem = Instant.ofEpochMilli(date.getTime())
 					      .atZone(ZoneId.systemDefault())
 					      .toLocalDateTime();
+					      */
+				LocalDateTime dataPostagem = resultado.getObject("data_postagem", LocalDateTime.class);
+				System.out.println(dataPostagem);
 				int likes = resultado.getInt("likes");
 				int dislikes = resultado.getInt("dislikes");
 				resposta = new Resposta(texto, autorNome, dataPostagem, likes, dislikes);
@@ -85,9 +88,12 @@ public class RespostaDAO {
 				Date date = resultado.getDate("data_postagem");
 				String texto = resultado.getString("texto");
 				String autorNome = resultado.getString("autor_nome");
-				LocalDateTime dataPostagem = Instant.ofEpochMilli(date.getTime())
+				/*LocalDateTime dataPostagem = Instant.ofEpochMilli(date.getTime())
 					      .atZone(ZoneId.systemDefault())
 					      .toLocalDateTime();
+					      */
+				LocalDateTime dataPostagem = resultado.getObject("data_postagem", LocalDateTime.class);
+				System.out.println(dataPostagem);
 				int likes = resultado.getInt("likes");
 				int dislikes = resultado.getInt("dislikes");
 				
