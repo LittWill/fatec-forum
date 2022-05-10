@@ -1,6 +1,7 @@
 .thread {
     margin-top: 20px;
-    width: 400px;
+    width: 250px;
+    margin: 0 auto;
 }
 
 li {
