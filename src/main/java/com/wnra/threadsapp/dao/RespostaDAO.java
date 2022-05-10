@@ -46,7 +46,7 @@ public class RespostaDAO {
 			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
-					"SELECT id, autor_nome, data_postagem, texto, questao, likes, dislikes FROM resposta WHERE id=?");
+					"SELECT id, autor_nome, data_postagem, texto, likes, dislikes FROM resposta WHERE id=?");
 			sql.setString(1, id);
 			ResultSet resultado = sql.executeQuery();
 			
@@ -62,7 +62,7 @@ public class RespostaDAO {
 				System.out.println(dataPostagem);
 				int likes = resultado.getInt("likes");
 				int dislikes = resultado.getInt("dislikes");
-				resposta = new Resposta(texto, autorNome, dataPostagem, likes, dislikes);
+				resposta = new Resposta(id, texto, autorNome, dataPostagem, likes, dislikes);
 				
 			}
 
@@ -81,11 +81,12 @@ public class RespostaDAO {
 			Connection conexao = DBConnectionMySQL.start();
 
 			PreparedStatement sql = conexao.prepareStatement(
-					"SELECT autor_nome, texto, data_postagem, likes, dislikes FROM resposta WHERE thread_id=?");
+					"SELECT id, autor_nome, texto, data_postagem, likes, dislikes FROM resposta WHERE thread_id=?");
 			sql.setString(1, threadId);
 			ResultSet resultado = sql.executeQuery();
 			while (resultado.next()) {
 				Date date = resultado.getDate("data_postagem");
+				String id = resultado.getString("id");
 				String texto = resultado.getString("texto");
 				String autorNome = resultado.getString("autor_nome");
 				/*LocalDateTime dataPostagem = Instant.ofEpochMilli(date.getTime())
@@ -97,7 +98,7 @@ public class RespostaDAO {
 				int likes = resultado.getInt("likes");
 				int dislikes = resultado.getInt("dislikes");
 				
-				Resposta resposta = new Resposta(texto, autorNome, dataPostagem, likes, dislikes);
+				Resposta resposta = new Resposta(id, texto, autorNome, dataPostagem, likes, dislikes);
 				
 				respostas.add(resposta);
 			}

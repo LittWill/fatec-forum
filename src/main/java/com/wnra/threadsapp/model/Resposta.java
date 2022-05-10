@@ -23,7 +23,8 @@ public class Resposta {
 		this.thread = thread;
 	}
 	
-	public Resposta(String texto, String autorNome, LocalDateTime dataPostagem, int likes, int dislikes) {
+	public Resposta(String id, String texto, String autorNome, LocalDateTime dataPostagem, int likes, int dislikes) {
+		this.id = id;
 		this.texto = texto;
 		this.autorNome = autorNome;
 		this.dataPostagem = dataPostagem;

@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.wnra.threadsapp.model.Thread" %>
 <%@ page import="com.wnra.threadsapp.model.Resposta" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
                 <!DOCTYPE html>
                 <html>
@@ -14,8 +14,10 @@
                         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
                         crossorigin="anonymous">
 
-                        <script src="./js/listagem-respostas.js"></script>
                         <link rel="stylesheet" href="./styles/listagem-respostas.css">
+                                                                
+                <script src="./js/listagem-respostas.js"></script>
+                <script src="./js/navbar-service.js" type="module"></script>
 
                         <style>
 
@@ -83,8 +85,8 @@
                               
                               <h3 class="card-title"><span class="pergunta"><%= thread.getQuestao() %></span></h3>
                               <div class="botoes-interacao">
-                              <button class="btn btn-success" id="btn-like-thread">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
-                              <button class="btn btn-danger" id="btn-dislike-thread">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
+                              <button class="btn btn-success" id="btn-like-thread" onclick="threadLike('<%=thread.getId()%>', event)">Like (<span id="likesNum"><%=thread.getLikes()%></span>)</button>
+                              <button class="btn btn-danger" id="btn-dislike-thread" onclick="threadDislike('<%=thread.getId()%>', event)">Dislike (<span id="dislikesNum"><%=thread.getDislikes()%></span>)</button>
                             </div>
                             </div>
                           </div>
@@ -114,8 +116,8 @@
                                                     <%= resposta.getTexto() %>
                                                 </span></h3>
                                                 <div class="botoes-interacao">
-                                                    <button class="btn btn-success" id="btn-like-resposta">Like (<span id="likesNum"><%=resposta.getLikes()%></span>)</button>
-                                                    <button class="btn btn-danger" id="btn-dislike-thread">Dislike (<span id="dislikesNum"><%=resposta.getDislikes()%></span>)</button>
+                                                    <button class="btn btn-success" id="btn-like-resposta" onclick="respostaLike('<%=resposta.getId()%>', event)">Like (<span id="likesNum"><%=resposta.getLikes()%></span>)</button>
+                                                    <button class="btn btn-danger" id="btn-dislike-resposta" onclick="respostaDislike('<%=resposta.getId()%>', event)">Dislike (<span id="dislikesNum"><%=resposta.getDislikes()%></span>)</button>
                                                   </div>
                                         </div>
                                     </div>
@@ -134,7 +136,6 @@
 
                 </body>
 
-                <script src="./js/service.js" type="module"></script>
-                <script src="./js/navbar-service.js" defer></script>
-
                 </html>
+
+                

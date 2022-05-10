@@ -56,27 +56,20 @@ public class GestaoThreads extends HttpServlet {
 				Thread thread = new Thread(autorNome, categoria, questao);
 				ThreadDAO.salvarThread(thread);
 				
-				List<Thread> threads = ThreadDAO.listarThreads();
-				request.setAttribute("threads", threads);
-				request.getRequestDispatcher("/listagem-threads.jsp").forward(request, response);
+				listarThreads(request, response);
 				break;
 				
 			}
 
 			case "listar":
-				List<Thread> threads = ThreadDAO.listarThreads();
-				request.setAttribute("threads", threads);
-				request.getRequestDispatcher("/listagem-threads.jsp").forward(request, response);
+					listarThreads(request, response);
 				break;
 
 			case "like": {
 				String id = request.getParameter("id");
 				if (null == id) {
-					throw new RuntimeException("Thread n„o encontrada!");
+					throw new RuntimeException("Thread n√£o encontrada!");
 				}
-				
-				System.out.println("like");
-
 				ThreadDAO.atribuirLike(id);
 				break;
 
@@ -84,7 +77,7 @@ public class GestaoThreads extends HttpServlet {
 			case "dislike": {
 				String id = request.getParameter("id");
 				if (null == id) {
-					throw new RuntimeException("Thread n„o encontrada!");
+					throw new RuntimeException("Thread n√£o encontrada!");
 				}
 
 				ThreadDAO.atribuirDislike(id);
@@ -92,7 +85,7 @@ public class GestaoThreads extends HttpServlet {
 			}
 
 			default:
-				System.err.println("AÁ„o n„o esperada!");
+				System.err.println("A√ß√£o n√£o esperada!");
 			}
 		}
 
@@ -104,7 +97,7 @@ public class GestaoThreads extends HttpServlet {
 					String threadId = request.getParameter("threadId");
 					Thread thread = ThreadDAO.obterThread(threadId);
 					if (null == thread) {
-						throw new RuntimeException("Thread n„o encontrada!");
+						throw new RuntimeException("Thread n√£o encontrada!");
 					}
 					request.setAttribute("thread", thread);
 					request.getRequestDispatcher("/criar-resposta.jsp").forward(request, response);
@@ -118,25 +111,60 @@ public class GestaoThreads extends HttpServlet {
 				
 				Thread thread = ThreadDAO.obterThread(threadId);
 				Resposta resposta = new Resposta(texto, autorNome, thread);
+				System.out.println(resposta.getTexto());
 				RespostaDAO.salvarResposta(resposta);
+				listarRespostas(request, response);
+				break;
 			}
 
 			case "listar": {
-				System.out.println("ok");
-				String threadId = request.getParameter("threadId");
-				if (null == threadId) {
-					throw new RuntimeException("Thread n„o encontrada!");
-				}
-
-				Thread threadObtida = ThreadDAO.obterThread(threadId);
-				request.setAttribute("thread", threadObtida);
-				request.getRequestDispatcher("/listagem-respostas.jsp").forward(request, response);
+				System.out.println("certo");
+				listarRespostas(request, response);
 				break;
 
+			}
+			
+			case "like": {
+				String respostaId = request.getParameter("respostaId");
+				Resposta resposta = RespostaDAO.obterResposta(respostaId);
+				if (null == resposta) {
+					throw new RuntimeException("Resposta n√£o encontrada!");
+				}
+				RespostaDAO.atribuirLike(respostaId);
+				break;
+			}
+			
+			case "dislike": {
+				String respostaId = request.getParameter("respostaId");
+				Resposta resposta = RespostaDAO.obterResposta(respostaId);
+				if (null == resposta) {
+					throw new RuntimeException("Resposta n√£o encontrada!");
+				}
+				RespostaDAO.atribuirDislike(respostaId);
+				break;
 			}
 			}
 		}
 
+	}
+
+	private void listarThreads(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		List<Thread> threads = ThreadDAO.listarThreads();
+		request.setAttribute("threads", threads);
+		request.getRequestDispatcher("/listagem-threads.jsp").forward(request, response);
+	}
+
+	private void listarRespostas(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String threadId = request.getParameter("threadId");
+		if (null == threadId) {
+			throw new RuntimeException("Thread n√£o encontrada!");
+		}
+
+		Thread threadObtida = ThreadDAO.obterThread(threadId);
+		request.setAttribute("thread", threadObtida);
+		request.getRequestDispatcher("/listagem-respostas.jsp").forward(request, response);
 	}
 
 }
